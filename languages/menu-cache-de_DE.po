@@ -1,0 +1,17 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: Menu Cache\n"
+"Language: de\n"
+
+#: 
+msgid "Success: Menu cache purged."
+msgstr "Erfolgreich: Menüzwischenspeicher entleert."
+
+#: 
+msgid "Purge cache"
+msgstr "Entleere Menüpuffer"
+
