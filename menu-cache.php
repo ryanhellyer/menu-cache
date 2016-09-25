@@ -4,7 +4,7 @@ Plugin Name: Menu Cache
 Plugin URI: https://geek.hellyer.kiwi/plugins/menu-cache/
 Description: Caches WordPress navigation menus
 Author: Ryan Hellyer
-Version: 1.0.1
+Version: 1.0.2
 Author URI: https://geek.hellyer.kiwi/
 Text Domain: menu-cache
 
