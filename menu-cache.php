@@ -40,7 +40,7 @@ class Menu_Cache {
 	/**
 	 * Set the cache time.
 	 */
-	protected $cache_time = HOUR_IN_SECONDS;
+	protected $cache_time;
 
 	/**
 	 * Class constructor.
@@ -54,6 +54,19 @@ class Menu_Cache {
 		add_action( 'wp_update_nav_menu',                                 array( $this, 'refresh_cache' ) );
 		add_action( 'admin_init',                                         array( $this, 'purge_cache' ) );
 		add_action( 'plugins_loaded',                                     array( $this, 'localization' ) );
+		add_action( 'plugins_loaded',                                     array( $this, 'setup' ) );
+	}
+
+	/**
+	 * Set default plugin values.
+	 */
+	public function setup() {
+		/**
+		 * Filters the expiration time of navigation menu cache.
+		 *
+		 * @param int $expiration Navigation menu cache expiration time. Default one hour.
+		 */
+		$this->cache_time = apply_filters( 'menu_cache_expiration', HOUR_IN_SECONDS );
 	}
 
 	/**
