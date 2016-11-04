@@ -64,7 +64,20 @@ class Menu_Cache {
 	 * @access   protected
 	 */
 	protected function get_transient( $args ) {
-		$transient = 'nav-' . md5( get_option( self::CACHE_KEY ) . $_SERVER['REQUEST_URI'] . var_export( $args, true ) );
+		// Check if unique hash for the menu was set
+		if ( ! isset( $args->menu_cache_hash ) ) {
+			/**
+			 * Filters the hash of a navigation menu.
+			 *
+			 * @param string   $hash MD5 hash of parsable string representation of wp_nav_menu() arguments.
+			 * @param stdClass $args An object containing wp_nav_menu() arguments.
+			 */
+			$hash = apply_filters( 'menu_cache_hash', md5( var_export( $args, true ) ), $args );
+
+			$args->menu_cache_hash = (string) $hash;
+		}
+
+		$transient = 'nav-' . md5( get_option( self::CACHE_KEY ) . $_SERVER['REQUEST_URI'] . $args->menu_cache_hash );
 		return $transient;
 	}
 
