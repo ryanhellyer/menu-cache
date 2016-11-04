@@ -77,7 +77,7 @@ class Menu_Cache {
 			$args->menu_cache_hash = (string) $hash;
 		}
 
-		$transient = 'nav-' . md5( get_option( self::CACHE_KEY ) . $_SERVER['REQUEST_URI'] . $args->menu_cache_hash );
+		$transient = 'nav-' . md5( $this->get_cache_version() . $_SERVER['REQUEST_URI'] . $args->menu_cache_hash );
 		return $transient;
 	}
 
@@ -155,6 +155,25 @@ class Menu_Cache {
 	 */
 	public function refresh_cache() {
 		update_option( self::CACHE_KEY, time() );
+	}
+
+	/**
+	 * Get current version of cache.
+	 *
+	 * @return string $version Cache version
+	 */
+	public function get_cache_version() {
+		$version = get_option( self::CACHE_KEY );
+
+		// If no version was set, set new one
+		if ( ! $version ) {
+			$this->refresh_cache();
+
+			// Get new version
+			$version = get_option( self::CACHE_KEY );
+		}
+
+		return $version;
 	}
 
 	/**
