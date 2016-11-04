@@ -233,4 +233,4 @@ class Menu_Cache {
 	}
 
 }
-new Menu_Cache();
+$GLOBALS['menu_cache'] = new Menu_Cache();
