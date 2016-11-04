@@ -104,7 +104,7 @@ class Menu_Cache {
 		add_action( 'admin_notices', array( $this, 'purge_success_notice' ) );
 
 		// Allow other plugins to know that we purged
-		do_action( 'minit-cache-purged' );
+		do_action( 'menu-cache-purged' );
 	}
 
 	/**
