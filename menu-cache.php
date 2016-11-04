@@ -166,6 +166,25 @@ class Menu_Cache {
 	}
 
 	/**
+	 * Get current version of cache.
+	 *
+	 * @return string $version Cache version
+	 */
+	public function get_cache_version() {
+		$version = get_option( self::CACHE_KEY );
+
+		// If no version was set, set new one
+		if ( ! $version ) {
+			$this->refresh_cache();
+
+			// Get new version
+			$version = get_option( self::CACHE_KEY );
+		}
+
+		return $version;
+	}
+
+	/**
 	 * Set the menu cache.
 	 * 
 	 * @param  string   $nav_menu   The nav menu content
