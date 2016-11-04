@@ -77,7 +77,15 @@ class Menu_Cache {
 			$args->menu_cache_hash = (string) $hash;
 		}
 
-		$transient = 'nav-' . md5( $this->get_cache_version() . $_SERVER['REQUEST_URI'] . $args->menu_cache_hash );
+		/**
+		 * Filters the URI of a current page.
+		 *
+		 * @param string $uri The URI which was given in order to access current page.
+		 * @param stdClass $args An object containing wp_nav_menu() arguments.
+		 */
+		$request_uri = apply_filters( 'menu_cache_request_uri', $_SERVER['REQUEST_URI'], $args );
+
+		$transient = 'nav-' . md5( $this->get_cache_version() . $request_uri . $args->menu_cache_hash );
 		return $transient;
 	}
 
