@@ -64,7 +64,15 @@ class Menu_Cache {
 	 * @access   protected
 	 */
 	protected function get_transient( $args ) {
-		$transient = 'nav-' . md5( get_option( self::CACHE_KEY ) . $_SERVER['REQUEST_URI'] . var_export( $args, true ) );
+		/**
+		 * Filters the URI of a current page.
+		 *
+		 * @param string   $uri  The URI which was given in order to access current page.
+		 * @param stdClass $args An object containing wp_nav_menu() arguments.
+		 */
+		$request_uri = apply_filters( 'menu_cache_request_uri', $_SERVER['REQUEST_URI'], $args );
+
+		$transient = 'nav-' . md5( get_option( self::CACHE_KEY ) . $request_uri . var_export( $args, true ) );
 		return $transient;
 	}
 
