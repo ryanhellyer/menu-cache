@@ -64,15 +64,31 @@ class Menu_Cache {
 	 * @access   protected
 	 */
 	protected function get_transient( $args ) {
+		// Check if unique hash for the menu was set
+		if ( ! isset( $args->menu_cache_hash ) ) {
+			/**
+			 * Filters the hash of a navigation menu.
+			 *
+			 * @param string   $hash MD5 hash of parsable string representation of wp_nav_menu() arguments.
+			 * @param stdClass $args An object containing wp_nav_menu() arguments.
+			 */
+			$hash = apply_filters( 'menu_cache_hash', md5( var_export( $args, true ) ), $args );
+
+			$args->menu_cache_hash = (string) $hash;
+		}
+
 		/**
 		 * Filters the URI of a current page.
 		 *
-		 * @param string   $uri  The URI which was given in order to access current page.
-		 * @param stdClass $args An object containing wp_nav_menu() arguments.
+		 * @param string $uri The URI which was given in order 
+to access current page.
+		 * @param stdClass $args An object containing 
+wp_nav_menu() arguments.
 		 */
-		$request_uri = apply_filters( 'menu_cache_request_uri', $_SERVER['REQUEST_URI'], $args );
+		$request_uri = apply_filters( 'menu_cache_request_uri', 
+$_SERVER['REQUEST_URI'], $args );
 
-		$transient = 'nav-' . md5( get_option( self::CACHE_KEY ) . $request_uri . var_export( $args, true ) );
+		$transient = 'nav-' . md5( $this->get_cache_version() . $request_uri . $args->menu_cache_hash );
 		return $transient;
 	}
 
@@ -112,7 +128,7 @@ class Menu_Cache {
 		add_action( 'admin_notices', array( $this, 'purge_success_notice' ) );
 
 		// Allow other plugins to know that we purged
-		do_action( 'minit-cache-purged' );
+		do_action( 'menu-cache-purged' );
 	}
 
 	/**
