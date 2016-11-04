@@ -4,7 +4,7 @@ Plugin Name: Menu Cache
 Plugin URI: https://geek.hellyer.kiwi/plugins/menu-cache/
 Description: Caches WordPress navigation menus
 Author: Ryan Hellyer
-Version: 1.0.1
+Version: 1.0.2
 Author URI: https://geek.hellyer.kiwi/
 Text Domain: menu-cache
 
@@ -206,7 +206,7 @@ class Menu_Cache {
 	 */
 	public function set_cached_menu( $nav_menu, $args ) {
 
-		$transient = $this->get_transient( $args );
+		$transient = $this->get_transient( $args->theme_location );
 		set_transient( $transient, $nav_menu, $this->cache_time );
 
 		return $nav_menu;
@@ -221,7 +221,7 @@ class Menu_Cache {
 	 */
 	public function get_cached_menu( $dep = null, $args ) {
 
-		$transient = $this->get_transient( $args );
+		$transient = $this->get_transient( $args->theme_location );
 
 		// Return the cached menu if possible
 		if ( false === ( $menu = get_transient( $transient ) ) ) {
