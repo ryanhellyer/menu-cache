@@ -54,7 +54,7 @@ class Menu_Cache {
 		add_action( 'wp_update_nav_menu',                                 array( $this, 'refresh_cache' ) );
 		add_action( 'admin_init',                                         array( $this, 'purge_cache' ) );
 		add_action( 'plugins_loaded',                                     array( $this, 'localization' ) );
-		add_action( 'plugins_loaded',                                     array( $this, 'setup' ) );
+		add_action( 'init',                                               array( $this, 'setup' ) );
 	}
 
 	/**
